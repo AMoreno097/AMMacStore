@@ -244,7 +244,7 @@ namespace Presentacion.Controllers
                 ViewBag.Message = "Ocurrio un error al momento de eliminar al usuario" + result.MensajeError;
 
             }
-            return View("Modal");
+            return RedirectToAction("MostrarUsuarios", "Usuario");
 
         }
         public ActionResult Cerrar()
