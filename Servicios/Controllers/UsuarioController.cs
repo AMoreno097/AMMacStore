@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Servicios.Controllers
 {
@@ -19,6 +20,7 @@ namespace Servicios.Controllers
                 return NotFound(result);
             }
         }
+        [EnableCors("AccesoCore")]
         [HttpGet]
         [Route("api/Usuario/MostrarUsuarioId/{IdUsuario}")]
         public IActionResult GetById(int IdUsuario)

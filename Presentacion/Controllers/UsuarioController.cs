@@ -133,52 +133,37 @@ namespace Presentacion.Controllers
 
         }
         [HttpPost]
-        public ActionResult Formulario(Modelo.Usuario usuario)
+        public ActionResult Formulario(Modelo.Usuario usuario, string password)
         {
+           
+            var bcrypt = new Rfc2898DeriveBytes(password, new byte[0], 10000, HashAlgorithmName.SHA256);
+           
+            var passwordHash = bcrypt.GetBytes(20);
             Modelo.Result result = new Modelo.Result();
+
             if (usuario.IdUsuario == 0)
             {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("http://localhost:5145/api/");
-                    var respuesta = client.PostAsJsonAsync<Modelo.Usuario>("Usuario/AgregarUsuario", usuario);
-                    respuesta.Wait();
-
-                    var resultUsuario = respuesta.Result;
-                    if (resultUsuario.IsSuccessStatusCode)
-                    {
-                       
-                        ViewBag.Message = "El registro de usuario a sido exitoso";
-                    }
-                    else
-                    {
-                        ViewBag.Message = "Ocurrio un error al insertar el usuario" + " " + result.MensajeError;
-                    }
-
-                }
-                return RedirectToAction("MostrarTodo");
+                // Insertar usuario en la base de datos
+                usuario.Contraseña = passwordHash;
+                Modelo.Result resultado = Negocio.Usuario.RegistrarUsuario(usuario);
+                return RedirectToAction("MostrarUsuario", "Usuario");
             }
             else
             {
-                using (var client = new HttpClient())
+                usuario.Contraseña = passwordHash;
+                Modelo.Result resultad = Negocio.Usuario.ModificarUsuario(usuario);
+                
+
+                if (result.Correct)
                 {
-                    client.BaseAddress = new Uri("http://localhost:5145/api/");
-                    var respuesta = client.PostAsJsonAsync<Modelo.Usuario>("Usuario/ModificarUsuario/" + usuario.IdUsuario, usuario);
-                    respuesta.Wait();
-
-                    var resultUsuario = respuesta.Result;
-                    if (resultUsuario.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("MostrarUsuarios");
-                    }
-                    else
-                    {
-                        ViewBag.Message = "Ocurrio un error al insertar el registro" + " " + result.MensajeError;
-                    }
+                    return RedirectToAction("MostrarUsuarios","Usuario");
                 }
-
+                else
+                {
+                    
+                }
             }
-            return View("Modal");
+            return View(usuario);
         }
         [HttpGet]
         public ActionResult NewPassword(string email)

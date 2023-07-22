@@ -174,14 +174,14 @@ namespace Negocio
 
         }
 
-        public static Modelo.Result Update(Modelo.Usuario usuario)
+        public static Modelo.Result ModificarUsuario(Modelo.Usuario usuario)
         {
             Modelo.Result result = new Modelo.Result();
             try
             {
                 using (Conexion.AmorenoMacStoreContext context = new Conexion.AmorenoMacStoreContext())
                 {
-                    int query = context.Database.ExecuteSqlRaw($"ModificarUsuario {usuario.IdUsuario}, '{usuario.Nombre}', '{usuario.Apellidos}', {usuario.Edad}, '{usuario.Edad}', @Password", new SqlParameter("@Password", usuario.Contraseña));
+                    int query = context.Database.ExecuteSqlRaw($"ModificarUsuario {usuario.IdUsuario}, '{usuario.Nombre}','{usuario.Apellidos}', {usuario.Edad},'{usuario.Email}', @Password", new SqlParameter("@Password", usuario.Contraseña));
 
                     if (query >= 0)
                     {
