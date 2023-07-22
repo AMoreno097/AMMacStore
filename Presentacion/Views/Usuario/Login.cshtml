@@ -1,0 +1,77 @@
+﻿@model Modelo.Usuario
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/css/login.css">
+   <script src="/js/site.js"></script>	 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+</head>
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Ingresar</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Registrar</label>
+		<div class="login-form">
+			<div class="sign-in-htm">
+				 @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        { 
+				<div class="group">
+					<label for="user" class="label">Email</label>
+					<input id="user" type="text" class="input" name="Email">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Contraseña</label>
+					<input class="input" data-type="password" name="password">
+				</div>
+				<div class="group">
+					<input type="submit" class="button" value="Entrar">
+				</div>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+					<a href="/Usuario/CambiarPassword">Olvido Contraseña?</a>
+				</div>
+				}
+			</div>
+
+			<div class="sign-up-htm">
+				 @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        { 
+				<div class="group">
+					<label for="pass" class="label">Nombre</label>
+					<input id="pass" type="text" class="input" name="Nombre">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Apellidos</label>
+					<input id="pass" type="text" class="input" name="Apellidos">
+	            </div>
+				<div class="group">
+					<label for="user" class="label">Edad</label>
+					<input id="user" type="text" class="input" name="Edad">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Correo Electronico</label>
+					<input id="pass" type="text" class="input" name="Email">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Contraseña</label>
+					<input id="pass" type="password" class="input" data-type="password" name="password">
+				</div>
+				
+				<div class="group">
+					<input type="submit" class="button" value="Registrar">
+				</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+    
+	</html>
+

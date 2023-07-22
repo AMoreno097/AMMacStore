@@ -1,0 +1,171 @@
+﻿@model Modelo.Usuario
+@{
+    ViewData["Title"] = "MostrarUsuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+   <script src="/js/Formulario.js"></script>	
+</head>
+<div>
+    <p>En este Modulo se muestra la tabla de los usuarios</p>
+    <p>Puedes agregar eliminar o modificar al usuario</p>
+</div>
+<div>
+    @Html.ActionLink("+", "Formulario", "Usuario", htmlAttributes: new { @class = "btn btn-success", @onclick="AbrirModal()" })
+</div>
+<hr />
+<body>
+    <table class="table table-bordered table-hover">
+        <thead class="text-center" style="background-color:black; color:white">
+            <tr>
+                
+                <td style="display:none">IdUsuario</td>
+                <td>Nombre</td>
+                <td>Apellidos</td>
+                <td>Edad</td>
+                <td>Email</td>
+                <td>Editar</td>
+                <td>Eliminar</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (Modelo.Usuario usuario in Model.Usuarios)
+            {
+                <tr style="align-items:center">
+                    
+                    <td style="display:none">@usuario.IdUsuario</td>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.Apellidos</td>
+                    <td>@usuario.Edad</td>
+                    <td>@usuario.Email</td>
+                    <td><a class="btn btn-success glyphicon glyphicon-pencil" href="@Url.Action("Formulario","Usuario", new {IdUsuario = usuario.IdUsuario,@onclick="AbrirModal()"})"></a></td>
+                    <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Eliminar","Usuario", new { IdUsuario = usuario.IdUsuario })" onclick="return confirm('Estas seguro de eliminar el usuario?')"></a></td>
+                </tr>
+
+            }
+
+
+        </tbody>
+
+    </table>
+  <div class="modal" tabindex="-1" role="dialog" id="modalPromociones">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingresa Nuevo Dependiente</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("FormDependiente", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        //Nombres y Apellidos
+                        <div class="row">
+                            <div>
+                                @Html.LabelFor(model => model.IdUsuario, new { @class = "visually-hidden" })
+
+                                @Html.TextBoxFor(model => model.IdUsuario, new { @class = "visually-hidden form-control" })
+
+                                @Html.ValidationMessageFor(model => model.IdUsuario)
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Nombre)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "SoloLetras(event,'txtNombre','lblNombre')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.Nombre)
+
+                                    @Html.Label(null, "", new{@id="lblNombre"})
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Apellidos)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.Apellidos, new { @class = "form-control", @id = "txtApellidoPaterno" ,@onkeypress = "SoloLetras(event,'txtApellidoPaterno','lblApellidoPaterno')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.Apellidos)
+                                    @Html.Label(null, "", new {@id="lblApellidoPaterno"})
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Edad)
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.Edad, new { @class = "form-control", @id = "txtApellidoMaterno" ,@onkeypress = "SoloLetras(event,'txtApellidoMaterno','lblApellidoMaterno')" ,@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.Edad)
+                                    @Html.Label(null, "", new{@id="lblApellidoMaterno"})
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Email)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="" fa-solid fa-user-pen" style="color: #000000;"></i> </span>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "Telefono" ,@autocomplete = "off" })
+
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                    @Html.Label(null, "", new{@id="Telefono "})
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Contraseña)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.Contraseña, new { @class = "form-control", @id = "txtNombre", @onkeypress = "SoloLetras(event,'txtNombre','lblNombre')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.Contraseña)
+
+                                    @Html.Label(null, "", new{@id="lblNombre"})
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    }
+
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="genric-btn primary-border circle arrow" data-dismiss="modal" onclick="CerrarModal()">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
