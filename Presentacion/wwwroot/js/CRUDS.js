@@ -1,4 +1,5 @@
-﻿function AbrirModal() {
+﻿
+function AbrirModal() {
     $("#ModalUpdate").modal("show");
 }
 function CerrarModal() {
@@ -31,3 +32,4 @@ function IniciarUsuario() {
         email: $('#txtEmail').val(''),
     }
 }
+

@@ -57,7 +57,7 @@
                                   @foreach (Modelo.Usuario usuario in Model.Usuarios)
             {
                                   <tr style="align-items:center">
-                                     <td><a class="btn btn-danger glyphicon glyphicon-trash"  onclick="GetById(@usuario.IdUsuario)"></a></td>
+                                     <td><a class="btn btn-warning glyphicon glyphicon-trash"  onclick="GetById(@usuario.IdUsuario)"></a></td>
                                      <td>@usuario.IdUsuario</td>
                                      <td>@usuario.Nombre</td>
                                      <td>@usuario.Apellidos</td>
@@ -92,15 +92,15 @@
       
                                 <div class="form-group">
                                     <label> Nombre</label>
-                                    <input type="text" class="form-control" id="txtNombre" name="Nombre" placeholder="Nombre" />
+                                    <input type="text" class="form-control" id="txtNombre" name="Nombre" placeholder="Nombre" onkeypress="SoloLetras(event, 'txtNombre', 'Nombre')" />
                                 </div>
                                 <div class="form-group">
                                     <label> Apellidos</label>
-                                    <input type="text" class="form-control" id="txtApellidos" name="Apellidos" placeholder="Apellidos" />
+                                    <input type="text" class="form-control" id="txtApellidos" name="Apellidos" placeholder="Apellidos" onkeypress="SoloLetras(event, 'txtApellidos', 'Apellidos')" />
                                 </div>
                                 <div class="form-group">
                                     <label> Edad</label>
-                                    <input type="text" class="form-control" id="txtEdad" name="Edad" placeholder="Edad" />
+                                    <input type="text" class="form-control" id="txtEdad" name="Edad" placeholder="Edad" onkeypress="SoloNumeros(event, 'txtEdad', 'Edad')"/>
                                 </div>
                                <div class="form-group">
                                     <label> Email</label>
@@ -116,7 +116,7 @@
                        </div>
 
                         <div class="modal-footer">
-                            <input type="submit" class="button" value="Registrar">
+                            <input type="submit" class="btn btn-success" value="Guardar">
                             <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModal()">Cancelar</button>
                         </div>
                         
@@ -152,3 +152,42 @@
                     </div>
                 </div>
             </div>
+@section Scripts {
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+<script type="text/javascript">
+    function SoloLetras(e, idTextBox, idLabel) {
+    var caracter = e.key;
+    if (!/^[a-zA-Z]/g.test(caracter)) {
+        $('#' + idLabel).text("Solo se aceptan letras");
+        $('#' + idLabel).css({ "color": "red" });
+        $('#' + idTextBox).css({ "border-color": "red", "background-color": "#f8d7da" });
+        return false;
+    }
+    else {
+        $('#' + idLabel).text("");
+        $('#' + idTextBox).css({ "border-color": "green", "background-color": "#D3F9C8" });
+        return true;
+    }
+}
+function SoloNumeros(e, idTextBox, idLabel) {
+    var caracter = e.key;
+    if (!/^[0-9]/g.test(caracter)) {
+        $('#' + idLabel).text("Solo se aceptan numeros");
+        $('#' + idLabel).css({ "color": "red" });
+        $('#' + idTextBox).css({ "border-color": "red", "background-color": "#f8d7da" });
+        return false;
+    }
+    else {
+        $('#' + idLabel).text("");
+        $('#' + idTextBox).css({ "border-color": "green", "background-color": "#D3F9C8" });
+        return true;
+    }
+}
+
+</script>
+}

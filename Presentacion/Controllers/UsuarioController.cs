@@ -146,7 +146,10 @@ namespace Presentacion.Controllers
                 // Insertar usuario en la base de datos
                 usuario.Contraseña = passwordHash;
                 Modelo.Result resultado = Negocio.Usuario.RegistrarUsuario(usuario);
-                return RedirectToAction("MostrarUsuario", "Usuario");
+                if (resultado.Correct)
+                {
+                    return RedirectToAction("MostrarUsuarios", "Usuario");
+                }
             }
             else
             {
@@ -154,7 +157,7 @@ namespace Presentacion.Controllers
                 Modelo.Result resultad = Negocio.Usuario.ModificarUsuario(usuario);
                 
 
-                if (result.Correct)
+                if (resultad.Correct)
                 {
                     return RedirectToAction("MostrarUsuarios","Usuario");
                 }
@@ -223,6 +226,30 @@ namespace Presentacion.Controllers
             return RedirectToAction("Login", "Usuario");
 
 
+
+        }
+        [HttpGet]
+        public ActionResult Eliminar(int IdUsuario)
+        {
+            Modelo.Result result = Negocio.Usuario.EliminarUsuario(IdUsuario);
+
+
+            if (result.Correct)
+            {
+
+                ViewBag.Message = "El usuario se elimino correctamente";
+            }
+            else
+            {
+                ViewBag.Message = "Ocurrio un error al momento de eliminar al usuario" + result.MensajeError;
+
+            }
+            return View("Modal");
+
+        }
+        public ActionResult Cerrar()
+        {
+            return RedirectToAction("Login", "Usuario");
 
         }
     }
